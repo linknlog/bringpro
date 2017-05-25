@@ -1,0 +1,51 @@
+<!--Job overview accordin section for-->
+
+<!--Accordion Heading-->
+<div uib-accordion-group is-open="job.jobOverviewPanels.isOpen">
+    <uib-accordion-heading>
+        <h4>
+            Job Overview
+            <i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': job.jobOverviewPanels.isOpen, 'glyphicon-chevron-right': !job.jobOverviewPanels.isOpen}"></i>
+        </h4>
+    </uib-accordion-heading>
+    <div class="row">
+        <!--repeat each location-->
+        <div ng-repeat="overview in job.wayPoints" class="col-xs-12 col-md-6">
+            <div class="z-depth-1">
+                <div class="card-header">
+                    <!--location number-->
+                    <small>Location {{$index + 1}}</small>
+                    <h5>
+                        {{overview.address.formatted_address}}<br />
+                        <span>
+                            <!--only show if Suite/Apt # exist-->
+                            <small ng-if="overview.suiteNo != null">Suite/Apt #: {{overview.suiteNo}}</small>
+                        </span>
+                    </h5>
+                    <span class="pull-left"><b>Contact:</b> {{overview.contactName}}</span>
+                    <span class="pull-right"><b>Phone:</b> {{overview.phone}}</span>
+                </div>
+                <!--location details -->
+                <div class="card-body card-padding">
+                    <div ng-if="overview.itemOptionsPickup != null">
+                        <h5>Picking Up</h5>
+                        <ul ng-repeat="itemOptionsPickup in overview.itemOptionsPickup">
+                            <li>{{itemOptionsPickup.name}} x{{itemOptionsPickup.quantity}}</li>
+                        </ul>
+                    </div>
+                    <div ng-if="overview.itemOptionsDropoff != null">
+                        <h5>Dropping Off</h5>
+                        <ul ng-repeat="itemOptionsDropoff in overview.itemOptionsDropoff">
+                            <li>{{itemOptionsDropoff.name}} x{{itemOptionsDropoff.quantity}}</li>
+                        </ul>
+                    </div>
+                    <div class="m-b-15">
+                        <!--only shows if service not or special instructions exist-->
+                        <span class="pull-left" ng-if="overview.serviceNote != null">Special Services: {{overview.serviceNote}}</span><br />
+                        <span class="pull-left" ng-if="overview.specialInstructions != null">Special Instructions: {{overview.specialInstructions}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

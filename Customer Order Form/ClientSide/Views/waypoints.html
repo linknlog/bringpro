@@ -1,0 +1,127 @@
+
+<!--Accordion for Waypoints and initial pickup/work address-->
+
+<div class="wayPoint" uib-accordion-group ng-repeat="wayPoint in job.wayPoints" is-open="job.wayPointAccordionPanels[$index].isOpen">
+<uib-accordion-heading>
+<h4>Enter Location<i class="pull-right glyphicon" ng-class="{'glyphicon-chevron-down': job.wayPointAccordionPanels[$index].isOpen, 'glyphicon-chevron-right': !job.wayPointAccordionPanels[$index].isOpen}"></i></h4>
+</uib-accordion-heading>
+
+<div class="card">
+<form name="addressForm" class="form-horizontal" role="form" novalidate>
+<div class="card-header m-b-30">
+    <h5 ng-if="$index > 0">Pickup item, Drop off item, or Both at this location.</h5>
+    <h5 ng-if="$index == 0">Pickup items from this location.</h5>
+</div>
+<div class="card-body">
+    <div class="col-xs-12 m-b-20">
+        <button ng-click="job.togglePickupItems()" class="btn btn-block btn-primary waves-effect">Pickup Item</button>
+        <div ng-show="job.showPickupItems" class="col-xs-12 m-t-20" ng-repeat="jobWaypointItemsPickup in job.wayPoints[$index].jobWaypointItemsPickup">
+            <div class="col-md-6 col-xs-12">
+                <div class="select-style m-b-15">
+                    <span class="select-icon"></span>
+                    <select ng-model="job.wayPoints[$parent.$index].jobWaypointItemsPickup[$index].itemTypeId"
+                            ng-options="jobWaypointItemsPickup.id as jobWaypointItemsPickup.name for jobWaypointItemsPickup in job.jobItems">
+                        <option value="" selected disabled>Add Item</option>
+                    </select>
+                </div>
+                <!-- this div is for the quantity dropdown-->
+                <div class="select-style m-b-15">
+                    <span class="select-icon"></span>
+                    <select ng-model="job.wayPoints[$parent.$index].jobWaypointItemsPickup[$index].quantity" ng-options="quantity for quantity in job.itemQuantity">
+                        <option value="" selected disabled>Quantity</option>
+                    </select>
+                </div>
+                <button ng-click="job.setCurrentItem(job.wayPoints[$parent.$index].jobWaypointItemsPickup[$index])" class="fileinput-button btn btn-success waves-effect" dropzone="job.dropzone" dropzone-config="job.dzOptions" callbacks="job.dzCallbacks" methods="dzMethods" ng-dropzone>
+                    <i class="glyphicon glyphicon-camera fileinput-button" style="pointer-events:none;"></i>
+                </button>
+                <button ng-show="wayPoint.jobWaypointItemsPickup.length > 1"
+                        class="btn btn-danger waves-effect"
+                        ng-click="job.deletePickupItem(job.wayPoints[$parent.$index].jobWaypointItemsPickup, $index)">
+                    <i class="zmdi zmdi-delete"></i>
+                </button>
+            </div>
+            <div class="col-md-6 previewTemplate">
+            </div>
+        </div>
+        <div class="col-xs-8 col-xs-offset-2">
+            <button ng-show="job.showPickupItems" type="button" class="btn btn-block btn-success waves-effect pull-right m-t-20" ng-click="job.addItem(job.wayPoints[$index].jobWaypointItemsPickup)">Add Item</button>
+        </div>
+    </div>
+    <div class="col-xs-12 m-b-30">
+        <button ng-if="$index > 0" ng-click="job.toggleDropoffItems()" class="btn btn-block btn-primary waves-effect">Drop Off Item</button>
+        <div ng-show="job.showDropOffItems" class="col-xs-12">
+            <div class="col-md-6 col-xs-12">
+                <div class="select-style m-b-15">
+                    <div class="col-sm-9 pull-right" ng-repeat="jobWaypointItemsDropOff in job.itemsPickup">
+                        <label for="timeSlots">
+                            <input type="checkbox" class="" value="{{jobWaypointItemsDropOff.id}}" name="timeSlots" id="timeSlots" ng-model="jobWaypointItemsDropOff.selected" />
+                            {{jobWaypointItemsDropOff.jobItem.name}}
+                        </label>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button ng-show="job.showDropOffItems" type="button" class="btn btn-primary waves-effect" ng-click="job.addItem(job.wayPoints[$index].jobWaypointItemsDropOff)">Add Item</button>
+    </div>
+</div>
+<div class="fg-line">
+    <div class="col-sm-12">
+        <select name="jobServices" multiple chosen
+                ng-model="job.wayPoints[$index].serviceNote"
+                style="width: 400px">
+            <option value=""></option>
+        </select>
+        <label for="serviceNote" class="control-label"> Need assembly? Trash Removal? Other Services? Let us know here. (optional)</label>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="fg-line">
+            <!--Google Auto Complete   ng-model that links to wayPoints.something-->
+            <input type="text" g-places-autocomplete ng-model="job.wayPoints[$index].address" class="form-control input-sm" id="" name="" placeholder="" required>
+            <label for="userFirstName" class="control-label"> Address or Business Name</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="fg-line">
+            <input type="text" ng-model="job.wayPoints[$index].suiteNo" class="form-control input-sm" id="" name="" placeholder="">
+            <label for="userFirstName" class="control-label"> Suite/Apt #</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="fg-line">
+            <input type="text" ng-model="job.wayPoints[$index].specialInstructions" class="form-control input-sm" id="" name="" placeholder="" required>
+            <label for="userFirstName" class="control-label"> Special Instructions (gate code, etc.)</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="fg-line">
+            <input type="text" ng-model="job.wayPoints[$index].contactName" class="form-control input-sm" id="" name="" placeholder="" required>
+            <label for="userFirstName" class="control-label"> Contact Name</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="col-sm-12">
+        <div class="fg-line">
+            <input type="text" ng-model="job.wayPoints[$index].phone" class="form-control input-sm" id="" name="" placeholder="" required>
+            <label for="userFirstName" class="control-label"> Phone Number</label>
+        </div>
+    </div>
+</div>
+<div class="form-group">
+    <div class="pull-left col-sm-10">
+        <button type="submit" id="" class="btn btn-danger waves-effect" ng-click="job.addAddress()">Add Another Address</button>
+        <button type="submit" id="" class="btn btn-primary waves-effect" ng-click="job.submitJob(job.wayPoints[$index].jobWaypointItemsPickup)">Review</button>
+    </div>
+</div>
+</form>
+</div>
+<div class="hidden" data-comment-index-number="1545" data-index-number="56fg345saas1sd" id="dataStorageDiv"></div>
+</div>

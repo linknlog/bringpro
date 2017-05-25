@@ -1,0 +1,101 @@
+<!--list of users index page-->
+
+<div class="container" ng-controller="adminUserController as admin">
+    <div class="card">
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10">
+                    <h2>
+                        bringpro Users <!--<small>Ensure that the data attribute [data-identifier="true"] is set on one column header.</small>-->
+                        <small>Create, Edit, Delete Users in this section</small>
+                    </h2>
+                </div>
+                <div class="col-md-2"><a href="/admin/users/create" class="btn btn-primary pull-right">Create New User</a></div>
+            </div>
+        </div>
+        <div id="data-table-command-header" class="bootgrid-header container-fluid">
+            <div class="row">
+                <div class="col-sm-4 actionBar">
+                    <div class="search form-group">
+                        <div class="input-group">
+                            <span class="zmdi icon input-group-addon glyphicon-search"></span>
+                            <input id="search_box" type="text" class="search-field form-control" placeholder="Search">
+                        </div>
+                        <button ng-click="admin.searchUsers()" class="btn btn-sm btn-primary pull-right" id="search_button">Search</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <table id="data-table-command" class="table table-striped table-vmiddle bootgrid-table" aria-busy="false">
+            <thead>
+                <tr>
+                    <th data-column-id="sender" class="text-left" style="">
+                        <a href="javascript:void(0);" class="column-header-anchor sortable">
+                            <span class="text">Name</span>
+                            <span class="zmdi icon "></span>
+                        </a>
+                    </th>
+                    <th data-column-id="sender" class="text-left" style="" data-identifier="true">
+                        <a href="javascript:void(0);" class="column-header-anchor sortable">
+                            <span class="text">Email</span>
+                            <span class="zmdi icon "></span>
+                        </a>
+                    </th>
+                    <th data-column-id="sender" class="text-left" style="">
+                        <a href="javascript:void(0);" class="column-header-anchor sortable">
+                            <span class="text">Phone</span>
+                            <span class="zmdi icon "></span>
+                        </a>
+                    </th>
+                    <th data-column-id="id" class="text-left" style="">
+                        <a href="javascript:void(0);" class="column-header-anchor sortable">
+                            <span class="text">Date Added</span>
+                            <span class="zmdi icon "></span>
+                        </a>
+                    </th>
+                    <th data-column-id="received" class="text-left" style="">
+                        <a href="javascript:void(0);" class="column-header-anchor sortable">
+                            <span class="text">Date Modified</span>
+                            <span class="zmdi icon zmdi-expand-more"></span>
+                        </a>
+                    </th>
+                    <th data-column-id="commands" class="text-left" style="">
+                        <a href="javascript:void(0);" class="column-header-anchor ">
+                            <span class="text">Commands</span><span class="zmdi icon "></span>
+                        </a>
+                    </th>
+                </tr>
+            </thead>
+
+            <!--this section repeats the incoming user data-->
+            <tbody id="admin_users_template">
+                <tr data-row-id="0" class="closest-tr" dir-paginate="user in admin.adminUsers | itemsPerPage: admin.payLoad.itemsPerPage | filter: search" total-items="admin.payLoad.totalItems" current-page="admin.payLoad.currentPage">
+                    <td class="text-left admin_users_name" style="">{{user.firstName}} {{user.lastName}}</td>
+                    <td class="text-left admin_users_email" style="">{{user.email}}</td>
+                    <td class="text-left admin_users_phone" style="">{{user.phone}}</td>
+                    <td class="text-left admin_users_date_added" style="">{{user.dateCreated}}</td>
+                    <td class="text-left admin_users_modified" style="">{{user.dateModified}}</td>
+                    <td class="text-left" style="">
+                        <a href="/admin/users/manage/{{user.userId}}" class="btn btn-icon command-edit waves-effect waves-circle">
+                            <span class="zmdi zmdi-edit"></span>
+                        </a>
+                        <button type="button" ng-click="admin.openModal(user.userId)" class="btn btn-icon command-delete waves-effect waves-circle">
+                            <span class="zmdi zmdi-delete"></span>
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+            
+        </table>
+        <div id="data-table-command-footer" class="bootgrid-footer container-fluid">
+            <div class="row">
+                <div class="col-sm-6">
+                    <dir-pagination-controls class="pagination-sm pull-left" on-page-change="admin.pageChanged(newPageNumber)" direction-links="false" boundary-links="true"></dir-pagination-controls>
+                </div>
+                <div class="col-sm-6 infoBar">
+                    <div class="infos pull-right"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

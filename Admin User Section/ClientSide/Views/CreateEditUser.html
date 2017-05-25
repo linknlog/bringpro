@@ -1,0 +1,106 @@
+
+<!--Create or Edit users in this section with built in front end validation-->
+
+<div class="card">
+    <form name="userForm" class="form-horizontal" role="form" id="create_user_form" ng-submit="admin.submitUser(userForm.$valid)" novalidate>
+        <div class="card-header">
+            <div class="row">
+                <div class="col-md-10 edit-user-heading">
+                    <h2>Edit User<small>Edit user info in this section</small></h2>
+                </div>
+                <div class="col-md-10 create-user-heading">
+                    <h2>Create User<small>Create user info in this section</small></h2>
+                </div>
+                <div class="col-md-2">
+                    <a href="/admin/users/index" class="btn btn-primary btn-sm waves-effect pull-right">Back to Users</a>
+                </div>
+            </div>
+        </div>
+        <!--this area is the user form. shows angular ng-model, ng-options to display drop down from json and front end validation-->
+        <div class="card-body card-padding">
+            <div class="form-group">
+                <label for="userRole" class="col-sm-2 control-label"> User Role</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <div class="select" id="role_container" ng-class="{'has-error' : userForm.userRoleSelect.$error.required && !userForm.userRoleSelect.$pristine}">
+                            <select class="form-control" ng-model="admin.adminUser.role.roleId" ng-options="role.roleId as role.name for role in admin.userRole" name="userRoleSelect" required>
+                                <option id="choose_role" value="">Choose Role</option>
+                            </select>
+                            <p ng-show="userForm.userRoleSelect.$error.required && !userForm.userRoleSelect.$pristine" class="help-block">Role Required.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : userForm.firstName.$error.required && !userForm.firstName.$pristine}">
+                <label for="userFirstName" class="col-sm-2 control-label"> First Name</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="text" class="form-control input-sm" ng-model="admin.adminUser.firstName" id="firstName" name="firstName" placeholder="First Name" required>
+                        <p ng-show="userForm.firstName.$error.required && !userForm.firstName.$pristine" class="help-block">First Name Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : userForm.lastName.$error.required && !userForm.lastName.$pristine}">
+                <label for="userLastName" class="col-sm-2 control-label"> Last Name</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="text" class="form-control input-sm" ng-model="admin.adminUser.lastName" id="lastName" name="lastName" placeholder="Last Name" required>
+                        <p ng-show="userForm.lastName.$error.required && !userForm.lastName.$pristine" class="help-block">Last Name Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : userForm.email.$error.required && !userForm.email.$pristine}">
+                <label for="userEmail" class="col-sm-2 control-label">Email</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="email" class="form-control input-sm" ng-model="admin.adminUser.email" id="emailAddress" name="email" placeholder="Enter a Valid Email" required>
+                        <p ng-show="userForm.email.$error.required && !userForm.email.$pristine" class="help-block">Email Required.</p>
+
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" ng-class="{'has-error' : userForm.phoneNumber.$error.required && !userForm.phoneNumber.$pristine}">
+                <label for="userPhone" class="col-sm-2 control-label">Phone</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="text" class="form-control input-sm" ng-model="admin.adminUser.phone" id="phoneNumber" name="phoneNumber" placeholder="Phone" required>
+                        <p ng-show="userForm.phoneNumber.$error.required && !userForm.phoneNumber.$pristine" class="help-block">Phone Number Required.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group" id="password_Container" ng-class="{'has-error' : userForm.passwordInput.$error.required && !userForm.passwordInput.$pristine}">
+                <label for="userPassword" class="col-sm-2 control-label">Password</label>
+                <div class="col-sm-10">
+                    <div class="fg-line">
+                        <input type="password" class="form-control input-sm" ng-model="admin.adminUser.password" id="passwordInput" name="passwordInput" ng-required="admin.passwordRequired" placeholder="Password must contain an uppercase letter, lowercase letter, a number, and special character.">
+                        <p ng-show="userForm.passwordInput.$error.required && !userForm.passwordInput.$pristine" class="help-block">Password Required.</p>
+                     </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dateAdded" class="col-sm-2 control-label">Date Added</label>
+                <div class="col-sm-10">
+                    <div class="fg-line disabled">
+                        <input type="text" class="form-control input-sm" ng-model="admin.adminUser.dateCreated" id="input_date_added" placeholder="Date Added" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label for="dateModified" class="col-sm-2 control-label">Date Modified</label>
+                <div class="col-sm-10">
+                    <div class="fg-line disabled">
+                        <input type="text" class="form-control input-sm" ng-model="admin.adminUser.dateModified" id="input_date_modified" placeholder="Date Modified" disabled>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" id="submit_user" class="btn btn-primary waves-effect" ng-disabled="userForm.$invalid" >Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="hidden" data-comment-index-number="1545" data-index-number="56fg345saas1sd" id="dataStorageDiv"></div>
+
+    </form>
+
+</div>
